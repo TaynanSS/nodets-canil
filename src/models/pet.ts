@@ -1,9 +1,11 @@
+// Passo a Passo:
 // Pegar todos os pets
 // Filtrar os pets por tipo
 // Filtrar os pets pelo nome
 
+type PetType = 'dog' | 'cat' | 'fish';
 type Pet = {
-    type: 'dog' | 'cat' | 'fish',
+    type: PetType,
     image: string,
     name: string,
     color: string,
@@ -135,5 +137,27 @@ const data: Pet[] = [
 export const Pet = {
     getAll: (): Pet[] => {
         return data;
+    },
+    getFromType: (type: PetType): Pet[] => {
+        return data.filter(item => item.type === type);
+        //Esse return é uma simplificação do return abaixo.
+        // Como há apenas um if retornando true e false, e apenas um return, então podemos simplificar dessa forma.
+
+        /*
+        return data.filter(item => {
+            if(item.type === type) {
+                return true;
+            } else {
+                return false;
+            }
+        }); 
+        */
+    },
+    getFromName: (name: string): Pet[] => {
+        return data.filter(item => 
+            item.name.toLowerCase().indexOf(name.toLowerCase()) > -1 
+        ); 
+        // Se o indexOf retornar mais do que -1, quer dizer que ele achou. Se o indexOf não acha nada, ele retorna -1
+        // Ex: Se tenho a string "Taynan" e o user pesquisou A, então o indexOf retorna que existe um T na posição 1 e 4 que é maior que -1, logo retorna TRUE.
     }
 }
